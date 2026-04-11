@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login App - Vue + Flask</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <!-- Login Form -->
+            <div v-if="!isAuthenticated" class="login-container">
+                <div class="login-box">
+                    <h2>Login</h2>
+                    <form @submit.prevent="handleLogin">
+                        <div class="input-group">
+                            <label>Email</label>
+                            <input 
+                                type="email" 
+                                v-model="loginForm.email" 
+                                required
+                                placeholder="Enter your email"
+                            >
+                        </div>
+                        <div class="input-group">
+                            <label>Password</label>
+                            <input 
+                                type="password" 
+                                v-model="loginForm.password" 
+                                required
+                                placeholder="Enter your password"
+                            >
+                        </div>
+                        <button type="submit" :disabled="isLoading">
+                            {{ isLoading ? 'Logging in...' : 'Login' }}
+                        </button>
+                        <div v-if="errorMessage" class="error-message">
+                            {{ errorMessage }}
+                        </div>
+                    </form>
+                    <div class="demo-info">
+                        <p>Demo Credentials:</p>
+                        <p>Email: admin@example.com<br>Password: admin123</p>
+                        <p>Email: user@example.com<br>Password: user123</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard (after login) -->
+            <div v-else class="dashboard">
+                <div class="dashboard-header">
+                    <h2>Welcome, {{ user.name }}!</h2>
+                    <button @click="handleLogout" class="logout-btn">Logout</button>
+                </div>
+                <div class="dashboard-content">
+                    <p>You are now logged in successfully!</p>
+                    <p>Email: {{ user.email }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
