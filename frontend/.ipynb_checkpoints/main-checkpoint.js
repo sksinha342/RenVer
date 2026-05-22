@@ -1,79 +1,73 @@
-// Backend URL - Render URL se replace karna hai
-const BACKEND_URL = 'https://sksinha342.onrender.com';  // 🔁 Change this!
+// Simple test to verify Vue is working
+console.log('Main.js loaded successfully!');
+console.log('Vue version:', typeof Vue);
 
-new Vue({
-    el: '#app',
-    data: {
-        isAuthenticated: false,
-        isLoading: false,
-        user: null,
-        loginForm: { email: '', password: '' },
-        errorMessage: ''
-    },
-    mounted() {
-        this.checkAuthStatus();
-    },
-    methods: {
-        async checkAuthStatus() {
-            try {
-                const response = await fetch(`${BACKEND_URL}/api/check-auth`, {
-                    method: 'GET',
-                    credentials: 'include',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.authenticated) {
-                        this.isAuthenticated = true;
-                        this.user = data.user;
-                    }
-                }
-            } catch (error) {
-                console.error('Auth check failed:', error);
-            }
+// Wait for DOM to load
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing Vue...');
+    
+    // Check if Vue is available
+    if (typeof Vue === 'undefined') {
+        console.error('Vue is not loaded!');
+        document.body.innerHTML = '<h1 style="color:red">Error: Vue.js not loaded. Check CDN.</h1>';
+        return;
+    }
+    
+    // Initialize Vue app
+    new Vue({
+        el: '#app',
+        data: {
+            isAuthenticated: false,
+            isLoading: false,
+            user: null,
+            loginForm: {
+                email: '',
+                password: ''
+            },
+            errorMessage: ''
         },
-        
-        async handleLogin() {
-            this.isLoading = true;
-            this.errorMessage = '';
+        mounted() {
+            console.log('Vue app mounted!');
+            this.checkAuthStatus();
+        },
+        methods: {
+            async checkAuthStatus() {
+                console.log('Checking auth status...');
+                // For testing - just show login form
+                this.isAuthenticated = false;
+            },
             
-            try {
-                const response = await fetch(`${BACKEND_URL}/api/login`, {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(this.loginForm)
-                });
+            async handleLogin() {
+                console.log('Login attempted with:', this.loginForm.email);
+                this.isLoading = true;
+                this.errorMessage = '';
                 
-                const data = await response.json();
-                
-                if (response.ok && data.success) {
-                    this.isAuthenticated = true;
-                    this.user = data.user;
-                    this.loginForm = { email: '', password: '' };
-                } else {
-                    this.errorMessage = data.error || 'Login failed';
-                }
-            } catch (error) {
-                this.errorMessage = 'Cannot connect to server';
-            } finally {
-                this.isLoading = false;
-            }
-        },
-        
-        async handleLogout() {
-            try {
-                await fetch(`${BACKEND_URL}/api/logout`, {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: { 'Content-Type': 'application/json' }
-                });
+                // Demo login - client side only for testing
+                setTimeout(() => {
+                    if (this.loginForm.email === 'admin@example.com' && this.loginForm.password === 'admin123') {
+                        this.isAuthenticated = true;
+                        this.user = { name: 'Admin User', email: this.loginForm.email };
+                        this.errorMessage = '';
+                        console.log('Login successful!');
+                    } else if (this.loginForm.email === 'user@example.com' && this.loginForm.password === 'user123') {
+                        this.isAuthenticated = true;
+                        this.user = { name: 'Regular User', email: this.loginForm.email };
+                        this.errorMessage = '';
+                        console.log('Login successful!');
+                    } else {
+                        this.errorMessage = 'Invalid credentials. Use demo credentials.';
+                        console.log('Login failed');
+                    }
+                    this.isLoading = false;
+                }, 500);
+            },
+            
+            async handleLogout() {
                 this.isAuthenticated = false;
                 this.user = null;
-            } catch (error) {
-                console.error('Logout failed:', error);
+                this.loginForm = { email: '', password: '' };
+                console.log('Logged out');
             }
         }
-    }
+    });
 });
