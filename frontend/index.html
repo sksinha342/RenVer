@@ -61,17 +61,9 @@
         </div>
     </div>
 
-    <!-- Vue.js CDN - Multiple fallbacks -->
+    <!-- Vue.js CDN - Using unpkg as backup -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue@2.7.14/dist/vue.js"></script>
     <script src="main.js"></script>
-    
-    <!-- Fallback if Vue.js doesn't load -->
-    <script>
-        window.addEventListener('load', function() {
-            if (typeof Vue === 'undefined') {
-                document.getElementById('app').innerHTML = '<div style="padding:20px;text-align:center">⚠️ Vue.js failed to load. Please check your internet connection.</div>';
-            }
-        });
-    </script>
 </body>
 </html>
