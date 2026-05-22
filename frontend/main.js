@@ -1,5 +1,5 @@
-// Backend URL - Render URL se replace karna hai
-const BACKEND_URL = 'https://sksinha342.onrender.com';  // 🔁 Change this!
+// Backend URL - Render production
+const BACKEND_URL = 'https://sksinha342.onrender.com';  // 🔁 Render backend
 
 new Vue({
     el: '#app',
