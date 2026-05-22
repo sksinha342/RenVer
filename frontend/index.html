@@ -40,28 +40,38 @@
                         </div>
                     </form>
                     <div class="demo-info">
-                        <p>Demo Credentials:</p>
-                        <p>Email: admin@example.com<br>Password: admin123</p>
-                        <p>Email: user@example.com<br>Password: user123</p>
+                        <p><strong>Demo Credentials:</strong></p>
+                        <p>📧 admin@example.com<br>🔑 admin123</p>
+                        <p>📧 user@example.com<br>🔑 user123</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Dashboard (after login) -->
+            <!-- Dashboard -->
             <div v-else class="dashboard">
                 <div class="dashboard-header">
-                    <h2>Welcome, {{ user.name }}!</h2>
+                    <h2>Welcome, {{ user.name }}! 🎉</h2>
                     <button @click="handleLogout" class="logout-btn">Logout</button>
                 </div>
                 <div class="dashboard-content">
-                    <p>You are now logged in successfully!</p>
-                    <p>Email: {{ user.email }}</p>
+                    <p>✅ You are now logged in successfully!</p>
+                    <p>📧 Email: {{ user.email }}</p>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Vue.js CDN - Multiple fallbacks -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
     <script src="main.js"></script>
+    
+    <!-- Fallback if Vue.js doesn't load -->
+    <script>
+        window.addEventListener('load', function() {
+            if (typeof Vue === 'undefined') {
+                document.getElementById('app').innerHTML = '<div style="padding:20px;text-align:center">⚠️ Vue.js failed to load. Please check your internet connection.</div>';
+            }
+        });
+    </script>
 </body>
 </html>
