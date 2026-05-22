@@ -1,5 +1,5 @@
 // Backend URL - Render production
-const BACKEND_URL = 'https://sksinha342.onrender.com';  // 🔁 Render backend
+const BACKEND_URL = 'https://renver.onrender.com';  // ✅ Render backend URL
 
 new Vue({
     el: '#app',
