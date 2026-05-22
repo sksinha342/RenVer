@@ -24,23 +24,19 @@ new Vue({
         errorMessage: ''
     },
     mounted() {
-        // Page load पर check करो कि user पहले से  या नहीं
         this.checkAuthStatus();
     },
     methods: {
-        // 🔐 Check if user is already logged in (session restore)
         async checkAuthStatus() {
             try {
                 const response = await fetch(`${BACKEND_URL}/api/check-auth`, {
                     method: 'GET',
-                    credentials: 'include', // 🍪 Cookie के साथ request करो
+                    credentials: 'include',
                     headers: { 'Content-Type': 'application/json' }
                 });
                 
                 if (response.ok) {
                     const data = await response.json();
-                    
-                    // अगर authenticated है तो dashboard दिखा दो
                     if (data.authenticated) {
                         this.isAuthenticated = true;
                         this.user = data.user;
@@ -49,11 +45,9 @@ new Vue({
                 }
             } catch (error) {
                 console.error('Auth check failed:', error);
-                // Network error - continue to show login form
             }
         },
         
-        // 🔑 Handle Login
         async handleLogin() {
             this.isLoading = true;
             this.errorMessage = '';
@@ -61,7 +55,7 @@ new Vue({
             try {
                 const response = await fetch(`${BACKEND_URL}/api/login`, {
                     method: 'POST',
-                    credentials: 'include', // 🍪 Cookie save करने के लिए
+                    credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(this.loginForm)
                 });
@@ -69,13 +63,11 @@ new Vue({
                 const data = await response.json();
                 
                 if (response.ok && data.success) {
-                    // ✅ Login successful
                     this.isAuthenticated = true;
                     this.user = data.user;
                     this.loginForm = { email: '', password: '' };
                     console.log('✅ Login successful!', this.user);
                 } else {
- Login failed                    // 
                     this.errorMessage = data.error || 'Login failed';
                     console.error('❌ Login error:', this.errorMessage);
                 }
@@ -87,12 +79,11 @@ new Vue({
             }
         },
         
-        // 🚪 Handle Logout
         async handleLogout() {
             try {
                 const response = await fetch(`${BACKEND_URL}/api/logout`, {
                     method: 'POST',
-                    credentials: 'include', // 🍪 Cookie भेज दो
+                    credentials: 'include',
                     headers: { 'Content-Type': 'application/json' }
                 });
                 
